@@ -1,4 +1,5 @@
 import { findClosestIonContent } from '../../content';
+import { getScrollData } from './scroll-data';
 
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
@@ -55,7 +56,7 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
     return;
   }
 
-  if (!needsScrollPadding(input, keyboardHeight)) {
+  if (!needsScrollPadding(input, el, keyboardHeight)) {
     return;
   }
 
@@ -80,7 +81,7 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
  * This is done by a) looking at the input position relative
  * to the keyboard and b) looking at the webview resize mode (if known).
  */
-const needsScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
+const needsScrollPadding = (input: HTMLElement, el: HTMLElement, keyboardHeight: number) => {
   // check if input is above the keyboard.
   // If it is, then scroll assist will not fire and we return false.
   // otherwise check if we know the capacitor resize mode via Keyboard
@@ -89,6 +90,14 @@ const needsScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   // If 'none' then return true
   // Otherwise return 'false'
 
+  /**
+   * If the input is already above the keyboard then
+   * we do not need to add more scroll padding.
+   */
+  const { scrollAmount } = getScrollData(input, el, keyboardHeight);
+  if (scrollAmount === 0) {
+    return false;
+  }
 
   return true;
 }
