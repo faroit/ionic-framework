@@ -22,10 +22,9 @@ export const enableScrollPadding = (keyboardHeight: number) => {
 };
 
 const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
-  // 2. support textarea/ion-textarea
   // 3. add logic to determine if padding should be added via getResizeMode
 
-  if (input.tagName !== 'INPUT') {
+  if (input.tagName !== 'INPUT' && input.tagName !== 'TEXTAREA') {
     return;
   }
   if (input.parentElement?.parentElement?.tagName === 'ION-SEARCHBAR') {
