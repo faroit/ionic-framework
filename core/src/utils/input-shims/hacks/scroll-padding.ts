@@ -22,6 +22,10 @@ export const enableScrollPadding = (keyboardHeight: number) => {
 };
 
 const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
+  // 1. remove ion-input restriction
+  // 2. support textarea/ion-textarea
+  // 3. add logic to determine if padding should be added via getResizeMode
+
   if (input.tagName !== 'INPUT') {
     return;
   }
