@@ -35,6 +35,11 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   if (el === null) {
     return;
   }
+
+  if (!needsScrollPadding(input, keyboardHeight)) {
+    return;
+  }
+
   const timer = (el as any)[PADDING_TIMER_KEY];
   if (timer) {
     clearTimeout(timer);
@@ -48,3 +53,23 @@ const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
     }, 120);
   }
 };
+
+/**
+ * Determines whether or not an app needs
+ * additional padding on the bottom of the content
+ * for an input to be scrolled above the on-screen keyboard.
+ * This is done by a) looking at the input position relative
+ * to the keyboard and b) looking at the webview resize mode (if known).
+ */
+const needsScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
+  // check if input is above the keyboard.
+  // If it is, then scroll assist will not fire and we return false.
+  // otherwise check if we know the capacitor resize mode via Keyboard
+  // If we do not, then return true
+  // If we do, check the resize mode
+  // If 'none' then return true
+  // Otherwise return 'false'
+
+
+  return true;
+}
