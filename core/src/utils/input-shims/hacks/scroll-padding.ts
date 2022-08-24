@@ -2,6 +2,24 @@ import { findClosestIonContent } from '../../content';
 
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
+/**
+ * Scroll padding adds additional padding to the bottom
+ * of ion-content so that there is enough scroll space
+ * for an input to be scrolled above the keyboard. This
+ * is needed in environments where the webview does not
+ * resize when the keyboard opens.
+ *
+ * Example: If an input at the bottom of ion-content is
+ * focused, there is no additional scrolling space below
+ * it, so the input cannot be scrolled above the keyboard.
+ * Scroll padding fixes this by adding padding equal to the
+ * height of the keyboard to the bottom of the content.
+ *
+ * Common environments where this is needed:
+ * - Mobile Safari: The keyboard overlays the content
+ * - Capacitor/Cordova on iOS: The keyboard overlays the content
+ * when the KeyboardResize mode is set to 'none'.
+ */
 export const enableScrollPadding = (keyboardHeight: number) => {
   const doc = document;
 
@@ -23,6 +41,7 @@ export const enableScrollPadding = (keyboardHeight: number) => {
 
 const setScrollPadding = (input: HTMLElement, keyboardHeight: number) => {
   // 3. add logic to determine if padding should be added via getResizeMode
+  // optional: enhance scroll padding to only add the space necessary (instead of the keyboard height)
 
   if (input.tagName !== 'INPUT' && input.tagName !== 'TEXTAREA') {
     return;
